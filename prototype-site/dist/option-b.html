@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bài 14</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-option="b">
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title">Bài 14</span>
+    </div>
+    <div class="topbar-right">
+      <nav class="nav-options" aria-label="Tùy chọn">
+        <a href="option-a.html" class="nav-opt" data-opt="a">A</a>
+        <span class="nav-sep">·</span>
+        <a href="option-b.html" class="nav-opt active" data-opt="b">B</a>
+        <span class="nav-sep">·</span>
+        <a href="option-c.html" class="nav-opt" data-opt="c">C</a>
+      </nav>
+      <span class="save-status" id="saveStatus">Đã lưu</span>
+      <button class="btn-text" id="btnThemeToggle" type="button">Tối</button>
+      <button class="btn-text" id="btnReset" type="button">Đặt lại</button>
+      <button class="btn-text facilitator-only" id="btnFacilitator" type="button">Ghi chú</button>
+    </div>
+  </header>
+
+  <main class="app-container">
+    <div class="unified-layout" id="unifiedLayout">
+      <aside class="context-column" id="contextColumn">
+        <div class="frame-box" id="frameSlide">
+          <div class="frame-header">
+            <span class="frame-title">Bài giảng</span>
+            <span class="time-mono">03:12</span>
+          </div>
+          <div class="mock-slide-body">
+            <div class="mock-slide-title">Đánh giá mô hình</div>
+            <div>• Huấn luyện / Kiểm định / Kiểm thử</div>
+            <div>• Benchmark: Chuẩn đánh giá chung</div>
+            <div>• Tránh rò rỉ dữ liệu kiểm thử</div>
+          </div>
+        </div>
+
+        <div class="frame-box" id="frameDirectNote">
+          <div class="frame-header">
+            <span class="frame-title">Ghi chú</span>
+          </div>
+          <form class="direct-note-form" id="directNoteForm">
+            <input type="text" class="direct-note-input" id="directNoteInput" placeholder="Nhập ghi chú..." autocomplete="off">
+            <button class="btn-text" type="submit">Lưu</button>
+          </form>
+        </div>
+
+        <div class="frame-box" id="frameTraces">
+          <div class="frame-header">
+            <span class="frame-title">Dấu vết</span>
+            <span class="text-sm text-muted" id="traceCount">9</span>
+          </div>
+          <div class="traces-list" id="sourceList"></div>
+        </div>
+      </aside>
+
+      <section class="action-column" id="actionColumn"></section>
+    </div>
+
+    <aside class="facilitator-panel hidden" id="facilitatorPanel"></aside>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
