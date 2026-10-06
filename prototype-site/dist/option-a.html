@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VLearn · AI Notes Prototype - Option A</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-option="a">
+  <header class="vlearn-topbar" id="vlearnTopbar">
+    <div class="topbar-left">
+      <button class="btn-icon" id="btnToggleSidebar" type="button" title="Đóng/mở Nội dung bài học">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="course-meta">
+        <span class="brand-badge">VLearn</span>
+        <span class="topbar-clean-title">AI Notes Prototype</span>
+      </div>
+    </div>
+
+    <div class="prototype-nav-center">
+      <nav class="nav-options" aria-label="Tùy chọn Prototype">
+        <a href="option-a.html" class="nav-opt active" data-opt="a">Option A</a>
+        <a href="option-b.html" class="nav-opt" data-opt="b">Option B</a>
+        <a href="option-c.html" class="nav-opt" data-opt="c">Option C</a>
+        <a href="index.html?option=hybrid" class="nav-opt hybrid-opt" data-opt="hybrid">✨ Hybrid (B+C)</a>
+      </nav>
+    </div>
+
+    <div class="topbar-right">
+      <span class="save-status" id="saveStatus">Đã lưu</span>
+      <button class="btn-topbar-action" id="btnOpenGuide" type="button" title="Mở hướng dẫn tự thao tác demo">
+        <span>💡 Hướng dẫn</span>
+      </button>
+      <button class="btn-topbar-action" id="btnReset" type="button" title="Đặt lại trạng thái">
+        <span>Đặt lại</span>
+      </button>
+      <button class="btn-topbar-action" id="btnThemeToggle" type="button" title="Đổi giao diện Sáng / Tối">
+        <span id="themeToggleText">Sáng</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="vlearn-main" id="vlearnMain">
+    <aside class="syllabus-sidebar" id="syllabusSidebar">
+      <div class="syllabus-header">
+        <span class="syllabus-title">NỘI DUNG BÀI HỌC</span>
+        <button class="btn-icon-sm" id="btnCloseSyllabus" type="button" title="Thu gọn danh mục">✕</button>
+      </div>
+
+      <div class="syllabus-content">
+        <div class="syllabus-section open">
+          <div class="section-title-row">
+            <span class="section-title">DESIGN THE EXPERIMENT</span>
+            <span class="chevron-icon">▾</span>
+          </div>
+
+          <div class="syllabus-group">
+            <div class="group-subheading">Slide bài giảng</div>
+            <div class="syllabus-item active" id="itemSlideDesign" data-slide="3">
+              <span class="item-icon red-bookmark">🔖</span>
+              <span class="item-name">Slide: Design the experiment</span>
+              <span class="item-badge">Đang học</span>
+            </div>
+            <div class="syllabus-item" data-slide="1">
+              <span class="item-icon video-icon">🎥</span>
+              <span class="item-name">Video: Tổng quan ngày 18</span>
+              <span class="item-duration">4 phút</span>
+            </div>
+          </div>
+
+          <div class="syllabus-group">
+            <div class="group-subheading">1. Prototype nhiều phương án</div>
+            <div class="syllabus-item" data-slide="4">
+              <span class="item-icon doc-icon">📄</span>
+              <span class="item-name">Slide: Parallel Prototype</span>
+            </div>
+          </div>
+
+          <div class="syllabus-group">
+            <div class="group-subheading">2. Thiết kế khi AI sai</div>
+            <div class="syllabus-item" data-slide="5">
+              <span class="item-icon doc-icon">📄</span>
+              <span class="item-name">Slide: Human-centered AI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="slide-viewer-area" id="slideViewerArea">
+      <div class="slide-stage-container">
+        <div class="slide-canvas-viewport">
+          <div class="slide-canvas" id="slideCanvas">
+            <button class="slide-ai-sparkle-btn" id="btnSlideAiTrigger" type="button" title="Khởi tạo AI Notes từ slide này">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z"/></svg>
+            </button>
+
+            <div class="slide-content-wrap" id="slideContentWrap"></div>
+
+            <!-- DRAGGABLE NOTE DRAWER (Mặc định ẩn) -->
+            <div class="vlearn-note-drawer hidden" id="vlearnNoteDrawer">
+              <div class="note-drawer-header" id="noteDrawerHeader" title="Nhấn giữ để kéo thả vị trí sổ ghi chú">
+                <div class="drawer-header-left">
+                  <span class="drag-grip-icon">⠿</span>
+                  <span class="drawer-header-title">Sổ ghi chú</span>
+                  <span class="drawer-status-text">Đã lưu</span>
+                </div>
+                <div class="drawer-header-actions">
+                  <button class="btn-drawer-add" id="btnDrawerAddNote" type="button">+ Thêm</button>
+                  <button class="btn-icon-tiny" id="btnDrawerExpand" type="button" title="Chuyển sang bảng AI Notes">⤢</button>
+                  <button class="btn-icon-tiny" id="btnDrawerClose" type="button" title="Đóng">✕</button>
+                </div>
+              </div>
+
+              <div class="note-drawer-body">
+                <div class="note-card-entry">
+                  <textarea class="card-entry-input" id="drawerNoteInput" rows="2" placeholder="Viết điều bạn hiểu được từ trang này..."></textarea>
+                  <button class="card-entry-close" id="btnClearDrawerNote" type="button">✕</button>
+                </div>
+
+                <div class="drawer-ai-sync-box" id="drawerAiSyncBox">
+                  <div class="ai-sync-header">
+                    <span class="ai-sync-tag">✨ AI Đồng Bộ Ngữ Cảnh</span>
+                    <span class="ai-sync-slide" id="drawerCurrentSlideLabel">Slide 3 · 03:12</span>
+                  </div>
+                  <div class="ai-sync-body" id="drawerAiSyncText">
+                    Option A: Bạn có thể tự phân loại thẻ ghi chú vào 3 nhóm Ý chính/Chưa hiểu/Xem lại.
+                  </div>
+                  <div class="ai-sync-actions">
+                    <button class="btn-drawer-sync" id="btnOpenFullAiNotes" type="button">Mở đầy đủ AI Notes (Option A) →</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-bottom-toolbar" id="slideBottomToolbar">
+          <div class="toolbar-group-left">
+            <button class="tool-btn active" title="Con trỏ chọn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7 18 3-7 7-3L3 3z"/></svg></button>
+            <button class="tool-btn" title="Bút vẽ"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-1.5M2 22l3-7 4 4-7 3z"/></svg></button>
+            <button class="tool-btn" title="Bút dạ quang"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 11-6 6v3h3l6-6M22 2l-7 7 3 3 7-7z"/></svg></button>
+            <button class="tool-btn" title="Tẩy xóa"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21M22 21H7"/></svg></button>
+          </div>
+
+          <div class="toolbar-group-view">
+            <div class="zoom-controls">
+              <button class="tool-btn-icon" id="btnZoomOut" title="Thu nhỏ">-</button>
+              <span class="zoom-value" id="zoomValue">100%</span>
+              <button class="tool-btn-icon" id="btnZoomIn" title="Phóng to">+</button>
+            </div>
+          </div>
+
+          <div class="toolbar-group-pager">
+            <button class="pager-btn" id="btnPrevSlide" type="button" title="Trang trước">‹</button>
+            <span class="pager-text"><strong id="currentSlideNum">3</strong> / <span id="totalSlideNum">6</span></span>
+            <button class="pager-btn" id="btnNextSlide" type="button" title="Trang sau">›</button>
+          </div>
+
+          <div class="toolbar-group-right">
+            <button class="btn-vlearn-notebook" id="btnToggleNotebook" type="button" title="Mở Sổ ghi chú">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z"/></svg>
+              <span>Sổ ghi chú</span>
+              <span class="notebook-badge" id="notebookBadge">1</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="slide-thumbnails-strip" id="slideThumbnailsStrip">
+          <button class="thumb-nav-btn" id="btnThumbPrev">‹</button>
+          <div class="thumbnails-track" id="thumbnailsTrack"></div>
+          <button class="thumb-nav-btn" id="btnThumbNext">›</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESIZABLE SPLITTER (Kéo to hơn thay vì fix size cứng) -->
+    <div class="panel-resizer" id="panelResizer" title="Kéo để chỉnh kích thước Dual Panel">
+      <div class="resizer-handle"></div>
+    </div>
+
+    <aside class="right-ai-sidebar" id="rightAiSidebar">
+      <div class="right-panel-header">
+        <div class="panel-tabs">
+          <button class="panel-tab" id="tabAssistant" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z"/></svg>
+            <span>Trợ giảng AI</span>
+          </button>
+          <button class="panel-tab active" id="tabAiNotes" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z"/></svg>
+            <span>AI Notes: Personal</span>
+            <span class="active-option-indicator" id="activeOptionBadge">A</span>
+          </button>
+        </div>
+
+        <div class="panel-header-actions">
+          <button class="btn-icon-sm" id="btnToggleExpandRight" title="Mở rộng / thu gọn">⤢</button>
+        </div>
+      </div>
+
+      <div class="assistant-chat-view hidden" id="assistantChatView">
+        <div class="chat-greeting-card">
+          <h3 class="chat-greeting-title">Chiều nay DƯƠNG có vướng chỗ nào không?</h3>
+          <p class="chat-context-subtitle" id="chatContextSubtitle">Đang mở: Slide: Design the experiment - trang 3</p>
+        </div>
+
+        <div class="chat-messages-container" id="chatMessagesContainer">
+          <div class="chat-message assistant">
+            <div class="msg-avatar">✨</div>
+            <div class="msg-bubble">Chào Dương! Bạn có thể thử kéo thẻ hoặc bấm phân loại trong Option A nhé!</div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <form class="chat-form" id="chatForm">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Hỏi bất cứ điều gì...">
+            <button class="btn-send-chat" type="submit">↑</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="ai-notes-workspace-view" id="aiNotesWorkspaceView">
+        <div class="notes-workspace-meta-bar">
+          <div class="meta-option-title">
+            <span class="option-tag" id="workspaceOptionTag">Option A · Timeline & Contextual Pinning</span>
+            <span class="option-philosophy" id="workspacePhilosophy">Chủ động cao (Low AI)</span>
+          </div>
+          <div class="meta-actions">
+            <button class="btn-text-sm" id="btnToggleTracesCol">Dấu vết (<span id="traceCountBadge">9</span>)</button>
+          </div>
+        </div>
+
+        <div class="notes-content-container" id="notesContentContainer">
+          <div class="traces-stream-pane" id="tracesStreamPane">
+            <div class="traces-pane-header">
+              <span class="traces-pane-title">Dấu vết bài giảng</span>
+            </div>
+            <div class="traces-list" id="sourceList"></div>
+          </div>
+
+          <div class="action-interactive-pane" id="actionColumn"></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- POPUP HƯỚNG DẪN -->
+  <div class="guide-modal-overlay hidden" id="guideModalOverlay">
+    <div class="guide-modal-dialog">
+      <div class="guide-modal-header">
+        <div class="guide-modal-title">
+          <span class="guide-modal-icon">💡</span>
+          <span>Hướng Dẫn Thao Tác Trải Nghiệm Demo</span>
+        </div>
+        <button class="btn-icon-sm" id="btnCloseGuideModal" type="button">✕</button>
+      </div>
+
+      <div class="guide-modal-body">
+        <div class="guide-callout">
+          <strong>Lưu ý:</strong> Bạn có thể trực tiếp click, gõ chữ, tích chọn hoặc kéo thả trên màn hình để kiểm chứng phản xạ của AI thay vì xem dữ liệu cố định.
+        </div>
+
+        <div class="guide-steps-grid">
+          <div class="guide-step-card">
+            <div class="step-badge">1</div>
+            <div class="step-title">Kéo thả khung Sổ ghi chú</div>
+            <div class="step-desc">
+              Nhấn giữ vào thanh tiêu đề của khung <strong>Sổ ghi chú</strong> (có biểu tượng ⠿) để di chuyển vị trí bất kỳ trên màn hình slide.
+            </div>
+          </div>
+
+          <div class="guide-step-card">
+            <div class="step-badge">2</div>
+            <div class="step-title">Thử nghiệm Option A</div>
+            <div class="step-desc">
+              • Tự kéo thẻ hoặc bấm nút phân loại vào 3 nhóm Ý chính / Chưa hiểu / Xem lại.<br>
+              • Bấm <em>🔍 Kiểm tra trùng</em> để xem AI phát hiện 2 thẻ trùng nội dung.<br>
+              • Thử nút <em>Hoàn tác</em> và <em>Lưu Study Pack</em>.
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-modal-actions">
+          <button class="btn-primary" id="btnTourDemo" type="button">
+            ▶ Chạy thử kịch bản tự động (Demo Walkthrough)
+          </button>
+          <button class="btn-outline" id="btnCloseGuideModalBtn" type="button">
+            Đã hiểu & Tự thao tác
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
